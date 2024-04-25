@@ -600,6 +600,98 @@ It should be stored securely, and should be generated randomly e.g.
 
 which will generate a 32 characters pseudorandom printable string.
 
+Reset the master password
+-------------------------
+
+There may be instances where the master password is misplaced or compromised and needs to be reset.
+The following process is for system administrators of an Odoo on-premise database to manually reset
+and re-encrypt the master password.
+
+.. seealso::
+   For more information about changing an Odoo.com account password see this documentation:
+   :ref:`odoocom/change_password`.
+
+When creating a new on-premise database, a random master password is generated. Odoo recommends
+using this password to secure the database. Odoo implements this password by default so that there
+is a secure master password for any Odoo on-premise deployment.
+
+.. note::
+   When creating an Odoo on-premise database the installation is accessible to anyone on the
+   internet until this password is set to secure the database.
+
+The master password is specified in the Odoo configuration file (`odoo.conf` or `odoorc` (hidden
+file)). The Odoo master password is needed to modify, create, or delete a database through the
+graphical user interface (GUI).
+
+Reset master password from GUI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, :guilabel:`Open` the Odoo configuration file (`odoo.conf` or `odoorc` (hidden file)). It is
+located in the following directory: `/etc/odoo.conf`. After opening the file, locate the line
+starting with `admin_passwd`. Then insert a `;` before the line and :guilabel:`Save` the file.
+
+Navigate back to the :abbr:`GUI (graphical user interface)` for the database at:
+`http://server_ip:port/web/database/manager` in a browser.
+
+.. note::
+   Replace `server_ip` with the IP address of the database. Replace `port` with the numbered port
+   the database is accessible from.
+
+A prompt should automatically display stating that the database in not protected: :guilabel:`Please
+set a master password to secure it`. Either click on the link or on the blue :guilabel:`Set Master
+Password` button directly below.
+
+.. image:: deploy/set-master-password.png
+   :align: center
+   :alt: Odoo management page with the set master password highlighted.
+
+Enter the new :guilabel:`Master Password` and record this password in a safe place. The password has
+been successfully reset, and a hashed version of the password now appears in the configuration file.
+
+Reset master password from command line
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Connect to the Odoo server's terminal via Secure Shell (SSH) protocol and edit the configuration
+file. To modify the configuration file type: :command:`sudo nano /etc/odoo.conf`
+
+After opening the configuration file, then navigate to the line with the `admin_passwd` which
+appears with a hashed password should the master password already be set.
+
+.. example::
+   The line appears like this:
+   `admin_passwd =
+   $pbkdf2-sh39dji295.59mptrfW.9z6HkA$w9j9AMVmKAP17OosCqDxDv2hjsvzlLpF8Rra8I7p/b573hji540mk/.3ek0lg%kvkol6k983mkf/40fjki79m`
+
+To reset the master password insert a semicolin (`;`) at the beginning of the line.
+
+.. example::
+   The line appears like this:
+   `;admin_passwd =
+   $pbkdf2-sh39dji295.59mptrfW.9z6HkA$w9j9AMVmKAP17OosCqDxDv2hjsvzlLpF8Rra8I7p/b573hji540mk/.3ek0lg%kvkol6k983mkf/40fjki79m`
+
+Then restart the Odoo server by typing the command: :command:`sudo service odoo15 restart`
+
+.. note::
+   Change the number after Odoo to fit the specific version the server is running on.
+
+Next, navigate back to the :abbr:`GUI (graphical user interface)` for the database at:
+`http://server_ip:port/web/database/manager` in a browser.
+
+.. note::
+   Replace `server_ip` with the IP address of the database. Replace `port` with the numbered port
+   the database is accessible from.
+
+A prompt should automatically display stating that the database in not protected: :guilabel:`Please
+set a master password to secure it`. Either click on the link or on the blue :guilabel:`Set Master
+Password` button directly below.
+
+.. image:: deploy/set-master-password.png
+   :align: center
+   :alt: Odoo management page with the set master password highlighted.
+
+Enter the new :guilabel:`Master Password` and record this password in a safe place. The password has
+been successfully reset, and a hashed version of the password now appears in the configuration file.
+
 Supported Browsers
 ==================
 
