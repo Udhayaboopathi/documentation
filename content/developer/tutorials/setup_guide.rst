@@ -11,7 +11,7 @@ Odoo community and Odoo employees alike, the preferred way is to perform a sourc
    your environment for pushing local changes to the Odoo repositories.
 
 Adapt the environment for the tutorials
-=======================================
+=======================================  
 
 By now, you should have downloaded the source code into two local repositories, one for `odoo/odoo`
 and one for `odoo/enterprise`. These repositories are set up to push changes to pre-defined
